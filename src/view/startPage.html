@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-lg-6">
+        <p ng-if="pagee === 'allNotesPage'" style="font-size: 2em;">Notes</p>
+        <p ng-if="pagee === 'notesPage'" style="font-size: 2em;">Notes</p>
+        <p ng-if="pagee === 'linksPage'" style="font-size: 2em;">Links</p>
+        <p ng-if="pagee === 'imagesPage'" style="font-size: 2em;">Images</p>
+
+    </div>
+    <div ng-if="notes.length">
+        <div class="col-lg-6">
+            <a href="#" class="btn btn-success btn-round pull-right" id="user-feedback-trigger" title="Add a note">Add New Note</a>
+        </div>
+    </div>
+</div>
+
+<div ng-if="pagee === 'allNotesPage'" static-include="view/allNotes.html">
+</div>
+<div ng-if="pagee === 'notesPage'" static-include="view/notes.html">
+</div>
+<div ng-if="pagee === 'linksPage'" static-include="view/links.html">
+</div>
+<div ng-if="pagee === 'imagesPage'" static-include="view/images.html">
+</div>

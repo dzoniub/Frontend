@@ -1,0 +1,44 @@
+<div ng-init="editMode=false">
+    <div ng-hide="editMode">
+        <h3 style="font-weight: bold">{{note.title}}</h3>
+        <p style="white-space: pre-wrap">{{note.content}}</p>
+    </div>
+    <div ng-show="editMode">
+        <form name="" ng-submit="submitEdit(note.id, editTitle, editContent)" id="user_feedback_form">
+            <div class="mda-form-group">
+                <div class="mda-form-control">
+                    <input ng-init="editTitle=note.title" ng-model="editTitle" required="required"></input>
+                    <div class="mda-form-control-line"></div>
+                </div>
+            </div>
+            <div class="mda-form-group">
+                <div class="mda-form-control">
+                    <textarea ng-init="editContent=note.content" ng-model="editContent" required="required" style="resize:none;overflow:hidden;"></textarea>
+                    <div class="mda-form-control-line"></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-right mt-sm">
+                    <button type="submit" class="btn btn-success btn-round" id="user-feedback-button">Submit Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-show="options" class="ctrl_bar" ng-if="!note.trashed">
+        <button ng-click="colorChange = !colorChange">
+            <div class="color_palette" ng-init="colorChange= false" ng-show="colorChange">
+                <span class="circle" style="background-color: white" ng-click="noteColor = 'white'; editColor(note.id, noteColor)"></span>
+                <span class="circle" style="background-color: #FFC5C1" ng-click="noteColor = '#FFC5C1'; editColor(note.id, noteColor)"></span>
+                <span class="circle" style="background-color: #B7E9FF" ng-click="noteColor = '#B7E9FF'; editColor(note.id, noteColor)"></span>
+                <span class="circle" style="background-color: #CFD8DD" ng-click="noteColor = '#CFD8DD'; editColor(note.id, noteColor)"></span>
+            </div>
+            <span class="glyphicon glyphicon-glass" title="Change color" style="color:#ADBEC6"></span>
+        </button>
+        <button ng-click="$parent.editMode = !$parent.editMode">
+                <span class="glyphicon glyphicon-pencil" title="Edit note" style="color:#ADBEC6"></span>
+        </button>
+        <button ng-click="remove(note.id)">
+            <span class="glyphicon glyphicon-trash" title="Remove note" style="color:#ADBEC6"></span>
+        </button>
+    </div>
+</div>

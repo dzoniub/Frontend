@@ -1,0 +1,19 @@
+<!--Notes starts here-->
+
+<div id="masonry">
+    <div class="card" ng-repeat="note in notes" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-init="noteColor=note.color" ng-if="!note.trashed && note.type === 'link'" style="background-color:{{noteColor}};">
+        <div class="inner">
+            <div id="inner_note_content" static-include="view/singleLinkCard.html">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Notes ends here-->
+
+<!--Modal starts here-->
+
+<div static-include="view/modal.html" ng-init="$parent.noteType='link'">
+</div>
+
+<!--Modal ends here-->

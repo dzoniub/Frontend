@@ -1,0 +1,38 @@
+<!--Notes starts here-->
+
+<div id="masonry" ng-if="notes.length">
+    <div class="card" ng-repeat="note in notes" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-init="noteColor=note.color" ng-if="!note.trashed" style="background-color:{{noteColor}};">
+        <div ng-if="note.type === 'image'" static-include="view/singleImageCard.html" class="image">
+        </div>
+        <div class="inner">
+            <div ng-if="note.type === 'note'" id="inner_note_content" static-include="view/singleNoteCard.html">
+            </div>
+            <div ng-if="note.type === 'link'" id="inner_note_content" static-include="view/singleLinkCard.html">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="!notes.length">
+    <div class="row top-buffer">
+        <img src="Images/notes-empty-state.svg" class="img-responsive" style="width:30%;height:30%;display:block;margin: auto;">
+    </div>
+    <div class="row">
+        <h3 style="text-align: center; font-weight: bold">Keep Track of Your Notes</h3>
+    </div>
+    <div class="row">
+        <p style="text-align: center">Click on a button below to add your first note.</p>
+    </div>
+    <div class="row text-center">
+        <a href="#" class="btn btn-success btn-round" id="user-feedback-trigger" title="Add a note">Add First Note</a>
+    </div>
+</div>
+
+<!--Notes ends here-->
+
+<!--Modal starts here-->
+
+<div static-include="view/modal.html" ng-init="$parent.noteType='note'">
+</div>
+
+<!--Modal ends here-->

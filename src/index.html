@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TrackNotes</title>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="scripts/angular-file-upload.js"></script>
+    <script src = "config.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/NotesController.js"></script>
+    <script src="scripts/controllers/TrashController.js"></script>
+    <script src="scripts/services/NotesService.js"></script>
+    <script src="scripts/directives/static-include.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/indexStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $( document ).ready( function(){
+            $('.sidebar-nav').on('click',"li",function () {
+                $("li").removeClass('active');
+                $(this).addClass('active')
+            });
+        });
+    </script>
+</head>
+<body ng-app="trackNotes" style="font-family: 'Open Sans', sans-serif;">
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div ng-init="pagee='allNotesPage'" id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <img src="Images/note-tracker-logo.svg" style="width:190px;height:140px;display:block;margin-left: auto;margin-right: auto;margin-top: -10%;margin-bottom: 20%;">
+
+            <li class="active">
+                <a ui-sref="beginingState" ng-click="pagee= 'allNotesPage'" href="#"> All Notes</a>
+            </li>
+            <li>
+                <a ui-sref="beginingState" ng-click="pagee= 'notesPage'" href="#"> Notes</a>
+            </li>
+            <li>
+                <a ui-sref="beginingState" ng-click="pagee= 'imagesPage'" href="#"> Images</a>
+            </li>
+            <li>
+                <a ui-sref="beginingState" ng-click="pagee= 'linksPage'" href="#"> Links</a>
+            </li>
+            <li>
+                <hr />
+            </li>
+            <li>
+                <a ui-sref="trashedNotes" href="#"> Trash</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Bootstrap Core JavaScript -->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<script type="text/javascript">
+    $(document).on('click', '#user-feedback-trigger', function () {
+        $('#user-feedback-button').text('Add A Note');
+        $('#user_feedback').val('');
+        $('.user-feedback-modal').modal();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+var config = {
+    hostName : 'name_of_your_host'
+};

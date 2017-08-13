@@ -1,0 +1,112 @@
+<div tabindex="-1" role="dialog" aria-labelledby="user-feedback-modal-label" class="modal fade user-feedback-modal">
+    <div class="modal-dialog modal-auto-size">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li ng-click="$parent.noteType = 'note'" role="presentation" ng-class="{'active': pagee === 'notesPage' || pagee === 'allNotesPage'}"><a href="#addNote" aria-controls="addNote" role="tab" data-toggle="tab"> Note</a>
+
+                    </li>
+                    <li ng-click="$parent.noteType = 'image'" role="presentation" ng-class="{'active': pagee === 'imagesPage'}"><a href="#addImage" aria-controls="addImage" role="tab" data-toggle="tab"> Image</a>
+
+                    </li>
+                    <li ng-click="$parent.noteType = 'link'" role="presentation" ng-class="{'active': pagee === 'linksPage'}"><a href="#addLink" aria-controls="addLink" role="tab" data-toggle="tab"> Links</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-body">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': pagee === 'notesPage' || pagee === 'allNotesPage'}" id="addNote">
+                        <form name="" ng-submit="$parent.submit()" id="user_feedback_form">
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <input id="user_feedback" name="text" ng-model="$parent.noteTitle" required="required" class="form-control" placeholder="Title" rows="2"></input>
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <textarea id="user_feedback" name="text" ng-model="$parent.noteContent" required="required" class="form-control" placeholder="Take a note..." rows="3"></textarea>
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right mt-sm">
+                                    <button type="submit" class="btn btn-success btn-round" id="user-feedback-button">Add A Note</button>
+                                    <button type="button" class="btn btn-default btn-round" data-dismiss="modal" aria-label="Close" class="close" style="color:grey">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': pagee === 'imagesPage'}" id="addImage">
+                        <!--<form name="" ng-submit="submit()" id="user_feedback_form">-->
+                        <div class="mda-form-group">
+                            <div class="mda-form-control">
+                                <p>
+                                    <input ng-file-select type="file" ng-disabled="uploader.queue.length === 1"/>
+                                </p>
+                                <div style="border-radius: 4px; float: left; border: 1px solid #bbb; height: 200px; width: 300px; padding: 10px; margin-right: 10px; margin-bottom: 10px" ng-repeat="item in uploader.queue">
+                                    <div style="overflow: hidden; white-space: nowrap"><strong>Name:</strong> {{ item.file.name }}</div>
+                                    <div><strong>Size:</strong> {{ item.file.size/1024/1024|number:2 }} Mb</div>
+
+                                    <p ng-show="uploader.isHTML5">
+                                        Upload Progress: {{ item.progress }}
+                                    <div class="item-progress-box">
+                                        <div class="item-progress" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                    </p>
+
+                                    <div>
+                                        <button class="btn btn-primary" ng-click="item.remove()">Remove</button>
+                                    </div>
+                                </div>
+                                <div style="clear: left"></div>
+
+                                <div ng-show="uploader.queue.length > 0">
+                                    <div>
+                                        Total progress: {{ uploader.progress }}
+                                        <div class="total-progress-box">
+                                            <div class="total-progress" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success btn-round" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">Upload</button>
+                                    <button class="btn btn-warning btn-round" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">Cancel</button>
+                                </div>
+                                <div style="text: center; margin: 20px 0">
+                                    <a ng-show="$parent.done_uploading" href="index.html#/album/{{album_name}}">
+                                        <button type="button" class="btn btn-success">Go back to album</button>
+                                    </a>
+                                </div>
+                                <div class="mda-form-control-line"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="pull-right mt-sm">
+                                <button type="button" class="btn btn-default btn-round" data-dismiss="modal" aria-label="Close" class="close" style="color:grey">Cancel</button>
+                            </div>
+                        </div>
+                        <!--</form>-->
+                    </div>
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': pagee === 'linksPage'}" id="addLink">
+                        <form name="" ng-submit="$parent.submit()" id="user_feedback_form">
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <input id="user_feedback" name="text" ng-model="$parent.linkURL" required="required" class="form-control" placeholder="Enter URL" rows="2"></input>
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right mt-sm">
+                                    <button type="submit" class="btn btn-success btn-round" id="user-feedback-button">Add A Note</button>
+                                    <button type="button" class="btn btn-default btn-round" data-dismiss="modal" aria-label="Close" class="close" style="color:grey">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

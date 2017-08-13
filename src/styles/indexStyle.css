@@ -1,0 +1,403 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/note-tracker-icon-font.eot');
+    src: url('../fonts/note-tracker-icon-font.woff') format('woff'),
+         url('../fonts/note-tracker-icon-font.ttf') format('truetype'),
+         url('../fonts/note-tracker-icon-font.svg') format('svg');
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+    background-color: #F4F5F7;
+}
+
+html,body{
+    height:100vh;
+    position: relative;
+}
+
+html { overflow:hidden; }
+body {
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:  border-box !important;
+}
+
+@supports (((-webkit-column-width: 17rem) or (-moz-column-width: 17rem) or (column-width: 17rem)) and ((-webkit-column-gap: 0.5rem) or (-moz-column-gap: 0.5rem) or (column-gap: 0.5rem))) {
+    #masonry {
+        -webkit-column-width:25rem;
+        -moz-column-width:25rem;
+        column-width:25rem;
+
+        -webkit-column-gap:2.5rem;
+        -moz-column-gap:2.5rem;
+        column-gap:2.5rem;
+    }
+}
+
+#masonry {
+    width:100%;
+}
+
+#masonry > .card{
+    width:100%;
+    word-wrap:break-word;
+    margin-top:20px;
+    /*padding-bottom:50px !important;*/
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 2px #a3a3a3;
+    display:inline-block;
+}
+
+.inner {
+    padding: 0 15px 0 15px;
+}
+
+#inner_note_content h3 {
+    padding-bottom: 10px;
+}
+
+#inner_note_content p {
+    padding-bottom: 10px;
+}
+
+#inner_note_content a {
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.nav {
+    background-color: white;
+    height:100%;
+    width:100%;
+}
+
+.ctrl_bar {
+    padding-bottom:10px;
+    position: relative;
+}
+
+.ctrl_bar.ng-hide {
+    display: block!important;
+    visibility: hidden;
+}
+
+.ctrl_bar > button{
+    border: none!important;
+    background: none;
+    outline: none;
+}
+
+.color_palette {
+    z-index: 100;
+    position: absolute;
+    bottom: 3em;
+    left: -2em;
+    height: 3em;
+    width: 12em;
+    box-shadow: 1px 1px 1px #a3a3a3;
+    background-color: white;
+    display: flex;
+    align-items:center;
+}
+
+.circle {
+    display: block;
+
+    height: 25px;
+    width: 25px;
+
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin-left:1em;
+    border: 1px dashed lightgrey;
+}
+
+.remove_spans {
+    cursor: pointer;
+}
+
+.top-buffer {
+    margin-top:4em;
+}
+
+.image{
+    position: relative;
+}
+
+.image > button{
+    position:absolute;
+    bottom: 10px;
+    left: 20px;
+    border: none!important;
+    background: none;
+    outline: none;
+}
+
+#wrapper {
+    padding-left: 250px;
+    height:100%;
+    width:100%;
+}
+
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: white;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    /*position: absolute;*/
+    padding: 35px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: darkgrey;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: black;
+    background: rgba(255,255,255,0.2);
+}
+
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+.sidebar-nav > .active {
+    background-color: lightblue;
+}
+
+.btn-round {
+    border-radius: 17px;
+}
+
+.glyphicon {
+    color: lightgrey;
+}
+
+.mda-form-group {
+    position: relative;
+    padding: 0 0 24px 0;
+}
+.mda-form-control {
+    position: relative;
+    padding-top: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+}
+.mda-form-control > input,
+.mda-form-control > textarea,
+.mda-form-control > select {
+    padding: 2px;
+    height: 34px;
+    background-color: transparent !important;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none!important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+}
+
+.mda-form-control > input:focus ~ label,
+.mda-form-control > textarea:focus ~ label,
+.mda-form-control > select:focus ~ label,
+.mda-form-control > input.focus ~ label,
+.mda-form-control > textarea.focus ~ label,
+.mda-form-control > select.focus ~ label {
+    top: 0!important;
+    font-size: .85em!important;
+    color: #448AFF;
+    opacity: 1;
+}
+.mda-form-control > input ~ label,
+.mda-form-control > textarea ~ label,
+.mda-form-control > select ~ label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: inline-block;
+    font-size: .85em;
+    opacity: .5;
+    font-weight: 500;
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.mda-form-control > input.disabled,
+.mda-form-control > textarea.disabled,
+.mda-form-control > select.disabled,
+.mda-form-control > input[disabled],
+.mda-form-control > textarea[disabled],
+.mda-form-control > select[disabled] {
+    background-color: transparent;
+    opacity: .5;
+    cursor: not-allowed;
+}
+.mda-form-control.mda-form-control-dark {
+    border-bottom-color: rgba(255, 255, 255, 0.26);
+}
+.mda-form-control.mda-form-control-dark > input,
+.mda-form-control.mda-form-control-dark > textarea,
+.mda-form-control.mda-form-control-dark > select {
+    color: #fff;
+}
+.mda-form-control.mda-form-control-dark > input::-moz-placeholder,
+.mda-form-control.mda-form-control-dark > textarea::-moz-placeholder,
+.mda-form-control.mda-form-control-dark > select::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+}
+.mda-form-control.mda-form-control-dark > input:-ms-input-placeholder,
+.mda-form-control.mda-form-control-dark > textarea:-ms-input-placeholder,
+.mda-form-control.mda-form-control-dark > select:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+.mda-form-control.mda-form-control-dark > input::-webkit-input-placeholder,
+.mda-form-control.mda-form-control-dark > textarea::-webkit-input-placeholder,
+.mda-form-control.mda-form-control-dark > select::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+.mda-form-control.mda-form-control-dark > input:focus ~ label,
+.mda-form-control.mda-form-control-dark > textarea:focus ~ label,
+.mda-form-control.mda-form-control-dark > select:focus ~ label,
+.mda-form-control.mda-form-control-dark > input.focus ~ label,
+.mda-form-control.mda-form-control-dark > textarea.focus ~ label,
+.mda-form-control.mda-form-control-dark > select.focus ~ label {
+    color: #fff !important;
+}
+.mda-form-group-lg .mda-form-control > input {
+    height: 48px;
+}
+.mda-form-group-lg.float-label .mda-form-control > input ~ label {
+    top: 28px;
+    font-size: 1.5em;
+}
+.mda-form-control > textarea {
+    height: auto;
+}
+.mda-form-control-line {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    right: 50%;
+    height: 2px;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.mda-form-control > input:focus ~ .mda-form-control-line,
+.mda-form-control > textarea:focus ~ .mda-form-control-line,
+.mda-form-control > select:focus ~ .mda-form-control-line {
+    background-color: #448AFF;
+    left: 0;
+    right: 0;
+}
+.mda-form-control.mda-form-control-dark > input:focus ~ .mda-form-control-line,
+.mda-form-control.mda-form-control-dark > textarea:focus ~ .mda-form-control-line,
+.mda-form-control.mda-form-control-dark > select:focus ~ .mda-form-control-line {
+    background-color: #fff;
+}
+
+.mda-form-msg {
+    position: absolute;
+    bottom: 0;
+    font-size: .85em;
+    line-height: 24px;
+    font-weight: 300;
+    color: #90A4AE;
+}
+.mda-form-msg.right {
+    right: 0;
+}
+.form-validate .mda-form-control .form-control.error ~ .mda-form-control-line {
+    background-color: #F44336;
+}
+.form-validate .mda-form-control .form-control.error:focus ~ label,
+.form-validate .mda-form-control .form-control.error.focus ~ label,
+.form-validate .mda-form-control .form-control.error ~ .mda-form-msg {
+    color: #F44336;
+}
+.form-validate .mda-form-control .form-control.valid ~ .mda-form-control-line,
+.form-validate .mda-form-control .form-control.valid:focus ~ .mda-form-control-line {
+    background-color: #4CAF50;
+}
+.form-validate .mda-form-control .form-control.valid:focus ~ label,
+.form-validate .mda-form-control .form-control.valid:focus:focus ~ label,
+.form-validate .mda-form-control .form-control.valid.focus ~ label,
+.form-validate .mda-form-control .form-control.valid:focus.focus ~ label {
+    color: #4CAF50;
+}
+.form-validate label.error {
+    color: #F44336;
+}
+.form-validate label.valid {
+    color: #4CAF50;
+}
+.float-label .mda-form-control > input ~ label,
+.float-label .mda-form-control > textarea ~ label {
+    top: 25px;
+    margin-bottom: 0;
+    font-size: 1em;
+    pointer-events: none;
+}
+.float-label .mda-form-control > input.valid ~ label,
+.float-label .mda-form-control > textarea.valid ~ label,
+.float-label .mda-form-control > input.error ~ label,
+.float-label .mda-form-control > textarea.error ~ label,
+.float-label .mda-form-control > input.has-value ~ label,
+.float-label .mda-form-control > textarea.has-value ~ label {
+    top: 0;
+    font-size: .85em;
+}
+

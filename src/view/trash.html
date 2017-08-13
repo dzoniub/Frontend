@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-lg-6">
+        <p style="font-size: 2em;">Trash</p>
+    </div>
+    <div ng-if="(notes | filter : {'trashed':true}).length">
+        <div class="col-lg-6">
+            <a class="btn btn-danger btn-round pull-right" title="Clear trash" ng-click="deleteall()">Clear trash</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="masonry">
+    <div class="card" ng-repeat="note in notes" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-if="note.trashed" style="background-color: {{note.color}};" >
+        <div ng-if="note.type === 'image'" static-include="view/singleImageCard.html" class="image">
+        </div>
+        <div class="inner">
+            <div ng-if="note.type === 'note'" id="inner_note_content" ng-include="'view/singleNoteCard.html'">
+            </div>
+            <div ng-if="note.type === 'link'" id="inner_note_content" ng-include="'view/singleLinkCard.html'">
+            </div>
+            <div ng-show="options" class="ctrl_bar">
+                <div class="remove_spans">
+                    <span ng-click="remove(note.id)" style="color:darkgrey">Send back to Notes</span>
+                    |
+                    <span ng-click="deleteone(note.id)" style="color:red">Remove</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
