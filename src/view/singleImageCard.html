@@ -1,4 +1,11 @@
 <img src="{{note.content}}" class="img-responsive">
-<button ng-click="remove(note.id)" ng-if="!note.trashed">
-    <span class="glyphicon glyphicon-trash" title="Remove note" style="color: #adbec6;"></span>
-</button>
+<div class="image_options_bar" ng-if="!note.trashed">
+    <button ng-click="remove(note.id)">
+        <span class="glyphicon glyphicon-trash" title="Remove note" style="color: #adbec6;"></span>
+    </button>
+</div>
+<div class="image_options_bar remove_spans image_trash_bar" ng-show="options" ng-if="note.trashed">
+    <span ng-click="remove(note.id)" style="color:darkgrey">Send back to Notes</span>
+    |
+    <span ng-click="deleteone(note.id)" style="color:red">Remove</span>
+</div>

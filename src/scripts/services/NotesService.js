@@ -1,16 +1,8 @@
 'use strict';
 
-notesModule.service('NotesService', function ($http, $fileUploader) {
+notesModule.service('NotesService', function ($http) {
     var self = this;
     var notes = [];
-
-    self.getUploader = function (scope) {
-        return $fileUploader.create({
-            scope: scope,
-            method: "POST",
-            url: config.hostName+"createNewImage"
-        });
-    };
 
     self.getAllNotes = function () {
         $http.get(config.hostName+'getAll').then(function (response) {

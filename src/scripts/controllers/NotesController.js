@@ -8,11 +8,10 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
     $scope.imageURL = '';
     $scope.linkURL = '';
 
-    $scope.uploader = NotesService.getUploader($scope);
-
-    $scope.uploader.bind("completeall", function (event, items) {
-        $scope.done_uploading = true;
-    });
+    $scope.filesChanged = function(element) {
+        $scope.files = element.files;
+        $scope.$apply();
+    };
 
     $scope.resetScope = function(){
         $scope.noteTitle = '';
@@ -57,9 +56,31 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
         }
         $http.post(config.hostName+'createNew', parameter).then(function (response) {
             if(response.data.uspesno === true){
-                alert('Note successfully added!');
                 $scope.notes = NotesService.getAllNotes();
                 angular.element(document.querySelector('.modal')).modal('hide');
+                $scope.resetScope();
+            }
+            else{
+                alert('Error during adding note!');
+            }
+        });
+    };
+
+    // for posting a new image note
+    $scope.submitImage = function () {
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+        $http.post(config.hostName+'createNewImage', fd,
+            {
+                transformRequest:angular.identity,
+                headers:{'Content-Type':undefined}
+            }).then(function (response) {
+            if(response.data.uspesno === true){
+                $scope.notes = NotesService.getAllNotes();
+                angular.element(document.querySelector('.modal')).modal('hide');
+                document.getElementById('fileInputField').value  = "";
                 $scope.resetScope();
             }
             else{
@@ -80,7 +101,6 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
         }
         $http.post(config.hostName+id+'/edit', parameter).then(function (response) {
             if(response.data.uspesno === true){
-                alert('Note successfully edited!');
                 $scope.notes = NotesService.getAllNotes();
                 angular.element(document.querySelector('.modal')).modal('hide');
                 $scope.resetScope();
@@ -91,8 +111,8 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
         });
     };
 
-    $scope.successImageReload = function() {
-        $scope.notes = NotesService.getAllNotes();
-    }
+    // $scope.successImageReload = function() {
+    //     $scope.notes = NotesService.getAllNotes();
+    // }
 
 }]);
