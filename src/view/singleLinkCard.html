@@ -1,9 +1,7 @@
 <div ng-init="editMode=false">
     <div ng-hide="editMode">
-        <a href="{{note.content}}" style="white-space: pre-wrap" target="_blank">{{note.content}}</a>
-        <a href="{{note.content}}" target="_blank">
-            <img src="Images/Icons/link.ico" class="img-responsive" style="color:grey">
-        </a>
+        <span><a href="{{note.content}}" style="white-space: pre-wrap" target="_blank">{{note.content}}</a></span>
+        <span class="pull-right"><a href="{{note.content}}" target="_blank" style="color:gray;"></a></span>
     </div>
     <div ng-show="editMode">
         <form name="" ng-submit="submitEdit(note.id, '0' ,editContent)" id="user_feedback_form">
@@ -28,7 +26,7 @@
                 <span class="circle" style="background-color: #B7E9FF" ng-click="noteColor = '#B7E9FF'; editColor(note.id, noteColor)"></span>
                 <span class="circle" style="background-color: #CFD8DD" ng-click="noteColor = '#CFD8DD'; editColor(note.id, noteColor)"></span>
             </div>
-            <span class="glyphicon glyphicon-glass" title="Change color" style="color:#ADBEC6"></span>
+            <span title="Change color" style="color:#ADBEC6"></span>
         </button>
         <button>
             <span ng-click="$parent.editMode=!$parent.editMode" class="glyphicon glyphicon-pencil" title="Edit note" style="color:#ADBEC6"></span>

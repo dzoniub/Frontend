@@ -7,13 +7,19 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
     $scope.noteContent = '';
     $scope.imageURL = '';
     $scope.linkURL = '';
-    // $scope.pagee='allNotesPage';
 
     $scope.uploader = NotesService.getUploader($scope);
 
     $scope.uploader.bind("completeall", function (event, items) {
         $scope.done_uploading = true;
     });
+
+    $scope.resetScope = function(){
+        $scope.noteTitle = '';
+        $scope.noteContent = '';
+        $scope.imageURL = '';
+        $scope.linkURL = '';
+    };
 
     // for editing color of the note
     $scope.editColor = function(id, color){
@@ -53,6 +59,8 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
             if(response.data.uspesno === true){
                 alert('Note successfully added!');
                 $scope.notes = NotesService.getAllNotes();
+                angular.element(document.querySelector('.modal')).modal('hide');
+                $scope.resetScope();
             }
             else{
                 alert('Error during adding note!');
@@ -63,16 +71,19 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
     // for editing a note
     $scope.submitEdit = function(id, title, content) {
         var note = NotesService.getNoteById(id);
+        var parameter = '';
         if(note.type === 'note'){
-            var parameter = ( {type:note.type, title:title, content:content} );
+            parameter = ( {type:note.type, title:title, content:content} );
         }
         else if(note.type === 'link'){
-            var parameter = ({type:note.type, content:content});
+            parameter = ({type:note.type, content:content});
         }
         $http.post(config.hostName+id+'/edit', parameter).then(function (response) {
             if(response.data.uspesno === true){
                 alert('Note successfully edited!');
                 $scope.notes = NotesService.getAllNotes();
+                angular.element(document.querySelector('.modal')).modal('hide');
+                $scope.resetScope();
             }
             else{
                 alert('Error during editing!');
