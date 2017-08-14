@@ -1,0 +1,3 @@
+# Frontend
+
+Notes application frontend
