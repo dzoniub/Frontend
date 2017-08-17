@@ -1,4 +1,7 @@
+# This file is a "template" of what your config.js file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+
 var config = {
     hostName : 'name_of_your_host'
-//    exampleHost: 'http://localhost:8000/'
+//    hostName: 'http://localhost:8000/'
 };
