@@ -20,20 +20,5 @@ notesModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProv
             controller: 'TrashController'
         }
     );
-    //     .state(
-    //     {
-    //         name: 'notes',
-    //         url: '/notes',
-    //         templateUrl: 'view/notes.html',
-    //         controller: 'NotesController'
-    //     }
-    // ).state(
-    //     {
-    //         name: 'links',
-    //         url: '/links',
-    //         templateUrl: 'view/links.html',
-    //         controller: 'NotesController'
-    //     }
-    // );
 }]);
 
