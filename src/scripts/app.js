@@ -1,6 +1,6 @@
 'use strict';
 
-var notesModule = angular.module('trackNotes',  ['ui.router', 'angularFileUpload']);
+var notesModule = angular.module('trackNotes',  ['ui.router']);
 
 notesModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
