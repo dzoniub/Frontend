@@ -110,9 +110,4 @@ notesModule.controller('NotesController', ['$scope', 'NotesService', '$statePara
             }
         });
     };
-
-    // $scope.successImageReload = function() {
-    //     $scope.notes = NotesService.getAllNotes();
-    // }
-
 }]);
