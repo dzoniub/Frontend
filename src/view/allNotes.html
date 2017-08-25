@@ -1,30 +1,41 @@
-<!--Notes starts here-->
+<!--Head title and button starts here-->
 
-<div id="masonry" ng-if="notes.length">
-    <div class="card" ng-repeat="note in notes" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-init="noteColor=note.color" ng-if="!note.trashed" style="background-color:{{noteColor}};">
-        <div ng-if="note.type === 'image'" static-include="view/singleImageCard.html" class="image">
-        </div>
-        <div class="inner">
-            <div ng-if="note.type === 'note'" id="inner_note_content" static-include="view/singleNoteCard.html">
-            </div>
-            <div ng-if="note.type === 'link'" id="inner_note_content" static-include="view/singleLinkCard.html">
-            </div>
+<div class="row">
+    <div class="col-lg-6">
+        <p ng-if="currentPage === 'allNotesPage'" class="page-name-headline">Notes</p>
+        <p ng-if="currentPage === 'notesPage'" class="page-name-headline">Notes</p>
+        <p ng-if="currentPage === 'linksPage'" class="page-name-headline">Links</p>
+        <p ng-if="currentPage === 'imagesPage'" class="page-name-headline">Images</p>
+    </div>
+    <div ng-if="(notes | filter : {'type': currentPageNoteFilter()} | filter:{'trashed': false}).length">
+        <div class="col-lg-6">
+            <a href="#" class="btn btn-success btn-round pull-right user-feedback-trigger" title="Add a note">Add New Note</a>
         </div>
     </div>
 </div>
 
-<div ng-if="!notes.length">
+<!--Head title and button ends here-->
+
+<!--Notes starts here-->
+
+<div id="masonry" ng-if="notes.length">
+    <div class="card" ng-repeat="note in notes | filter: {'type': currentPageNoteFilter()}" ng-if="!note.trashed" style="background-color:{{note.color}};">
+        <note-card note="note"></note-card>
+    </div>
+</div>
+
+<div ng-if="!(notes | filter : {'type': currentPageNoteFilter()} | filter:{'trashed': false}).length">
     <div class="row top-buffer">
-        <img src="Images/notes-empty-state.svg" class="img-responsive" style="width:30%;height:30%;display:block;margin: auto;">
-    </div>
-    <div class="row">
-        <h3 style="text-align: center; font-weight: bold">Keep Track of Your Notes</h3>
-    </div>
-    <div class="row">
-        <p style="text-align: center">Click on a button below to add your first note.</p>
+        <img src="Images/notes-empty-state.svg" class="img-responsive notes-empty-state-img">
     </div>
     <div class="row text-center">
-        <a href="#" class="btn btn-success btn-round" id="user-feedback-trigger" title="Add a note">Add First Note</a>
+        <h3 style="font-weight: bold">Keep Track of Your Notes</h3>
+    </div>
+    <div class="row text-center">
+        <p>Click on a button below to add your first note.</p>
+    </div>
+    <div class="row text-center">
+        <a href="#" class="btn btn-success btn-round user-feedback-trigger" title="Add a note">Add First Note</a>
     </div>
 </div>
 
@@ -32,7 +43,92 @@
 
 <!--Modal starts here-->
 
-<div static-include="view/modal.html" ng-init="$parent.noteType='note'">
+<div ng-controller="ModalController" tabindex="-1" role="dialog" aria-labelledby="user-feedback-modal-label" class="modal fade user-feedback-modal">
+    <div class="modal-dialog modal-auto-size">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li active-tab="['notesPage', 'allNotesPage']" id="noteTab" ng-click="noteType = 'note'">
+                        <a href="#addNote" role="tab" data-toggle="tab">
+                            <span class="gh gh-icon-notes"></span>Note
+                        </a>
+                    </li>
+                    <li active-tab="['imagesPage']" id="imageTab" ng-click="noteType = 'image'">
+                        <a href="#addImage" role="tab" data-toggle="tab">
+                            <span class="gh gh-icon-images"></span> Image
+                        </a>
+                    </li>
+                    <li active-tab="['linksPage']" id="linkTab" ng-click="noteType = 'link'">
+                        <a href="#addLink" role="tab" data-toggle="tab">
+                            <span class="gh gh-icon-link"></span> Links
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-body">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div active-tab="['allNotesPage', 'notesPage']" role="tabpanel" class="tab-pane" id="addNote">
+                        <form name="" ng-submit="submit()">
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <input name="text" ng-model="noteTitle" required="required" class="form-control" placeholder="Title">
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <textarea name="text" ng-model="noteContent" required="required" class="form-control textarea-style" placeholder="Take a note..." rows="1"></textarea>
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right mt-sm">
+                                    <button type="submit" class="btn btn-success btn-round modal-button-margin">Add A Note</button>
+                                    <button type="button" class="btn btn-default btn-round modal-cancel-color" data-dismiss="modal" aria-label="Close" class="close">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div active-tab="['imagesPage']" role="tabpanel" class="tab-pane" id="addImage">
+                        <form name="" ng-submit="submitImage()">
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <p>
+                                        <input id="fileInputField" ng-file-select type="file" file-input="files" onchange="angular.element(this).scope().filesChanged(this)"/>
+                                    </p>
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right mt-sm">
+                                    <button type="submit" class="btn btn-success btn-round modal-button-margin">Add A Note</button>
+                                    <button type="button" class="btn btn-default btn-round modal-cancel-color" data-dismiss="modal" aria-label="Close" class="close">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div active-tab="['linksPage']" role="tabpanel" class="tab-pane" id="addLink">
+                        <form name="" ng-submit="submit()" id="user_feedback_form">
+                            <div class="mda-form-group">
+                                <div class="mda-form-control">
+                                    <input name="text" ng-model="linkURL" required="required" class="form-control" placeholder="Enter URL">
+                                    <div class="mda-form-control-line"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right mt-sm">
+                                    <button type="submit" class="btn btn-success btn-round modal-button-margin">Add A Note</button>
+                                    <button type="button" class="btn btn-default btn-round modal-cancel-color" data-dismiss="modal" aria-label="Close" class="close">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Modal ends here-->

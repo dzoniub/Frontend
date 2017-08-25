@@ -9,7 +9,7 @@ notesModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProv
         {
             name: 'beginingState',
             url: '/',
-            templateUrl: 'view/startPage.html',
+            templateUrl: 'view/allNotes.html',
             controller: 'NotesController'
         }
     ).state(

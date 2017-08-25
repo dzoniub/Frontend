@@ -1,0 +1,89 @@
+<!--image-->
+<div ng-if="note.type === 'image'" class="image">
+    <img ng-src="{{note.content}}" class="img-responsive">
+    <div class="image_options_bar" ng-if="!note.trashed">
+        <button ng-click="remove(note.id)">
+            <span class="gh gh-icon-trash gh-options-color" title="Remove note"></span>
+        </button>
+    </div>
+</div>
+
+<!--note-->
+<div ng-if="note.type === 'note'" class="inner_note_content">
+    <div ng-hide="editMode">
+        <h3>{{note.title}}</h3>
+        <p>{{note.content}}</p>
+    </div>
+    <div ng-show="editMode">
+        <form name="" ng-submit="submitEdit(note.id, editTitle, editContent)">
+            <div class="mda-form-group">
+                <div class="mda-form-control">
+                    <input class="form-control" ng-init="editTitle=note.title" ng-model="editTitle" required="required">
+                    <div class="mda-form-control-line"></div>
+                </div>
+            </div>
+            <div class="mda-form-group">
+                <div class="mda-form-control">
+                    <textarea class="form-control textarea-style" ng-init="editContent=note.content" ng-model="editContent" required="required"></textarea>
+                    <div class="mda-form-control-line"></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-right mt-sm">
+                    <button type="submit" class="btn btn-success btn-round">Submit Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--link-->
+<div ng-if="note.type === 'link'" class="inner_note_content">
+    <div ng-hide="editMode">
+        <span><a href="{{note.content}}" target="_blank">{{note.content}}</a></span>
+        <span class="pull-right"><a class="gh gh-icon-new-tab gh-options-color" href="{{note.content}}" target="_blank"></a></span>
+    </div>
+    <div ng-show="editMode">
+        <form name="" ng-submit="submitEdit(note.id, '0' ,editContent)" >
+            <div class="mda-form-group">
+                <div class="mda-form-control">
+                    <input class="form-control" ng-init="editContent=note.content" ng-model="editContent" required="required">
+                    <div class="mda-form-control-line"></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-right mt-sm">
+                    <button type="submit" class="btn btn-success btn-round">Submit Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--controls-->
+<div class="ctrl_bar" ng-if="!note.trashed && note.type!=='image'">
+    <button ng-click="colorChangeToggle()">
+        <div class="color_palette" ng-show="colorChange">
+            <span class="circle circle-white" ng-click="editColor(note.id, 'white')"></span>
+            <span class="circle circle-red" ng-click="editColor(note.id, '#FFC5C1')"></span>
+            <span class="circle circle-blue" ng-click="editColor(note.id, '#B7E9FF')"></span>
+            <span class="circle circle-purple" ng-click="editColor(note.id, '#CFD8DD')"></span>
+        </div>
+        <span class= "gh gh-icon-color gh-options-color" title="Change color"></span>
+    </button>
+    <button ng-click="editModeToggle()">
+        <span class="gh gh-icon-eidt gh-options-color" title="Edit note"></span>
+    </button>
+    <button ng-click="remove(note.id)">
+        <span class="gh gh-icon-trash gh-options-color" title="Remove note"></span>
+    </button>
+</div>
+
+<!--trash controls-->
+<div ng-if="note.trashed" class="trash_bar">
+    <div class="remove_spans">
+        <span ng-click="remove(note.id)" style="color:darkgrey">Send back to Notes</span>
+        |
+        <span ng-click="deleteOne(note.id)" style="color:red">Remove</span>
+    </div>
+</div>
