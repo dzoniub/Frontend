@@ -6,6 +6,11 @@
             <span class="gh gh-icon-trash gh-options-color" title="Remove note"></span>
         </button>
     </div>
+    <div class="remove_spans image_options_bar" ng-if="note.trashed">
+        <span ng-click="remove(note.id)" style="color:darkgrey">Send back to Notes</span>
+        |
+        <span ng-click="deleteOne(note.id)" style="color:red">Remove</span>
+    </div>
 </div>
 
 <!--note-->
@@ -80,10 +85,12 @@
 </div>
 
 <!--trash controls-->
-<div ng-if="note.trashed" class="trash_bar">
+<div ng-if="note.trashed && note.type !== 'image'" class="trash_bar">
     <div class="remove_spans">
         <span ng-click="remove(note.id)" style="color:darkgrey">Send back to Notes</span>
         |
         <span ng-click="deleteOne(note.id)" style="color:red">Remove</span>
     </div>
 </div>
+
+<!--ng-class="note.type !== 'image' ? 'trash_bar' : 'image_options_bar' "-->
